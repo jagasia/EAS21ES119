@@ -893,3 +893,160 @@ HINT:
 AGE is optional.
 But if AGE is present, max of 100. 		101 is not allowed
 minimum 1					0 is not allowed
+
+
+
+
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<xsd:element name="CUSTOMERS">
+	<xsd:complexType>
+		<xsd:sequence>
+			<xsd:element name="CUSTOMER" maxOccurs="unbounded">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:choice>
+							<xsd:sequence>
+									<xsd:element name="FIRSTNAME" type="xsd:string" />
+									<xsd:element name="LASTNAME" type="xsd:string" />
+							</xsd:sequence>
+							<xsd:element name="NAME" type="xsd:string" />
+						</xsd:choice>
+					<xsd:element name="ADDRESS">
+						<xsd:complexType>
+							<xsd:sequence>
+								<xsd:element name="DNO" type="xsd:string" />
+								<xsd:element name="STREET" type="xsd:string" />
+								<xsd:element name="CITY" type="xsd:string" />
+							</xsd:sequence>
+						</xsd:complexType>
+					</xsd:element>
+					<xsd:element name="AGE" type="xsd:positiveInteger" minOccurs="0" />
+					</xsd:sequence>
+                  <xsd:attribute name="CID">
+					<xsd:simpleType>
+						<xsd:restriction base="xsd:string">
+							<xsd:pattern value="[C][0-9]{3}" />
+						</xsd:restriction>
+					</xsd:simpleType>
+				</xsd:attribute>
+				</xsd:complexType>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+</xsd:element>
+</xsd:schema>
+
+===========================
+
+<xs:element name="MyIntValue">
+    <xs:simpleType>
+        <xs:union>
+            <xs:simpleType>
+                <xs:restriction base='xs:integer'>
+                    <xs:minInclusive value="5"/>
+                    <xs:maxInclusive value="10"/>
+                </xs:restriction>
+            </xs:simpleType>
+            <xs:simpleType>
+                <xs:restriction base='xs:integer'>
+                    <xs:minInclusive value="20"/>
+                    <xs:maxInclusive value="34"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:union>
+    </xs:simpleType>
+</xs:element>
+
+
+---------------------
+In XSD language, 
+it is possible to create simple or complex types in multiple files. 
+And we can use those types in other xsd files also.
+
+<xsd:schema
+	targetNamespace=".....
+
+
+by specifying targetNamespace we are declaring the namespace. 
+similar to 	
+package com.cts.jag;		in java
+
+by using xmlns, we are importing the namespace
+similar to
+
+import com.cts.jag;		in java
+
+
+--------one.xsd-------------
+
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="com.cts.jag">
+	<xsd:simpleType name="sid">
+		<xsd:restriction base="xsd:string">
+			<xsd:pattern value="[S]{1}[0-9]{3}" />
+		</xsd:restriction>
+	</xsd:simpleType>
+</xsd:schema>
+
+
+
+
+------------student.xsd----------
+<xsd:schema 
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	xmlns="com.cts.jag"
+	schemaLocation="one.xsd"
+>
+
+<xsd:element name="STUDENTS" type="sts" />
+<xsd:complexType name="sts">
+	<xsd:sequence>
+		<xsd:element name="STUDENT" type="st" maxOccurs="unbounded" />
+	</xsd:sequence>
+</xsd:complexType>
+<xsd:complexType name="st">
+	<xsd:sequence>
+		<xsd:element name="FIRSTNAME" type="xsd:string" />
+		<xsd:element name="LASTNAME" type="xsd:string" />
+		<xsd:element name="AGE" type="xsd:string" />
+	</xsd:sequence>
+	<xsd:attribute name="ID" type="sid" />
+</xsd:complexType>
+</xsd:schema>
+
+
+
+
+
+=================================
+How to access a XML file from a java program?
+	not like a FileReader or FileInputStream
+
+	FileReader, can read a file as text
+
+	But XML file is more than a text file. Basically a text file. But more than a text file.
+
+It is possible to read the elements and attributes and their values from a java program.
+
+To help that, java provides, Parsers.
+
+Parse is an english word that means, read meaningfuly.
+
+Parsers can understand the xml language
+
+SAX		Simple API for XML
+
+
+
+SAX parser needs an implementation of Handler
+
+
+
+
+you are exporting, your records into XML Format
+
+from xml file, i need to read from java program and if there are 5 customers, i will get 5 objects of customer stored in an array list
+
+
+
+https://www.journaldev.com/1198/java-sax-parser-example
+

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <SCRIPT LANGUAGE="JavaScript">
+        var sOutput = validateFile("students.xml");
+        alert(sOutput);
+        
+        function validateFile(strFile)
+        {
+        // Create a schema cache and add books.xsd to it.
+        var xs = new ActiveXObject("MSXML2.XMLSchemaCache.4.0");
+        xs.add("urn:books", "students.xsd");
+        
+        // Create an XML DOMDocument object.
+        var xd = new ActiveXObject("MSXML2.DOMDocument.4.0");
+        
+        // Assign the schema cache to the DOMDocument's
+        // schemas collection.
+        xd.schemas = xs;
+        
+        // Load books.xml as the DOM document.
+        xd.async = false;
+        xd.validateOnParse = true;
+        xd.resolveExternals = true;
+        xd.load(strFile);
+        
+        // Return validation results in message to the user.
+        if (xd.parseError.errorCode != 0)
+        {
+        return("Validation failed on " + strFile +
+        "\n=====================" +
+        "\nReason: " + xd.parseError.reason +
+        "\nSource: " + xd.parseError.srcText +
+        "\nLine: " + xd.parseError.line + "\n");
+        }
+        else
+        return("Validation succeeded for " + strFile +
+        "\n======================\n" +
+        xd.xml + "\n");
+        }
+        
+        </SCRIPT>
+</head>
+<body>
+    <input type="button" value="Validate">
+</body>
+</html>
