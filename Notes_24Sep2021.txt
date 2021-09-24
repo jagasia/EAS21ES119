@@ -1,0 +1,319 @@
+My name is Jagadeeswaran R
+trainer
+
+I started learning computers during 1986
+Linux
+C
+
+windows was not invented on those days.
+We worked in CUI 		no graphics
+
+
+Fri, Sat, Sun
+
+XML Basics
+REST WS
+SOAP WS
+
+9 AM - 7 PM		6-7 pm is a buffer. Extra time
+
+11:00 to 11:30 		break
+
+13:00 to 14:00		lunch
+
+16:00 to 16:30		break
+
+6 pm we will usually finish training. and use remaining time for those who need additional inputs
+
+-------------------------------------------------------------
+
+every 40 minutes we will change the activity
+we will have break out session where you can discuss with a small group
+
+---------------------------------------------------------------
+
+XML
+	What XML stands for? What is the expansion for the abbreviation XML?
+	eXtensible Markup Language
+	---------------------------
+
+
+1999
+	XML was introduced.	
+	Microsoft presented white paper in W3C		(world wide web consortium). 
+	W3C is responsible for approving or rejecting web standards
+
+	Microsoft recommended to use XML as a standard for information interchange.
+	It was not accepted by W3C in the beginning. Then microsoft did some changes and presented again. in 1999, W3C approved XML as a standard for interchanging the information across data sources (heterogenous)
+
+imagine
+1) Kuppuri Chandana has Oracle database in their computer
+2) Manasa has MySql db in their computer
+3) I have IBM DB2 database in my computer
+
+We three people have 3 different type of databases (this is called heterogenous data sources)
+
+we are not having homogenous data sources
+
+In this scenario, I want Kuppuri and Manasa to send their data to me
+I need to import their data into my DB2 database
+
+Solution:
+----------	
+Both of them should EXPORT data from their database
+I have to IMPORT data into my database
+
+when they export data, what format they choose to export
+then they obtain a dump file. That file should be given to me.
+
+I should use that file to import the data into my database
+
+Before 1999, what was the format we were using to export data?????????
+	CSV
+
+aNy idea? what is CSV?
+	Comma Separated Value
+
+1, Raja, Sivakumar, 21
+2, Abdul, Raheem, 22
+3, John, Abraham, 20
+
+
+The above info is a CSV
+
+can you tell me, what is the age of Abdul?????
+	a human being can find the age of abdul as 22
+
+But for a program, it is not possible
+
+<STUDENTS>
+	<STUDENT>
+		<ID>1</ID>
+		<FIRSTNAME>Raja</FIRSTNAME>
+		<LASTNAME>Sivakumar</LASTNAME>
+		<AGE>21</AGE>
+	</STUDENT>
+	<STUDENT>
+		<ID>2</ID>
+		<FIRSTNAME>Abdul</FIRSTNAME>
+		<LASTNAME>Raheem</LASTNAME>
+		<AGE>22</AGE>
+	</STUDENT>
+	<STUDENT>
+		<ID>3</ID>
+		<FIRSTNAME>John</FIRSTNAME>
+		<LASTNAME>Abraham</LASTNAME>
+		<AGE>20</AGE>
+	</STUDENT>
+</STUDENTS>
+
+can you tell me the age of Abdul Raheem??? (by looking at the above xml code?)
+what is the age of a student, whose ID is 2 ???
+
+XML is more comprehensive when compared to CSV?
+
+csv is not self explanatory?
+	self explanation is provided by meta data. there was no meta data in CSV
+but in XML,
+	every data is self explanatory by the TAGS/ elements
+
+There are always misconception like confusion with HTML when they start learning XML
+so it is important to compare HTML and XML
+
+HTML
+	is meant for presentation. (Whatever we code in HTML is for display purpose)
+XML
+	is meant for representation	(not for display purpose) for definition of data
+
+Both are Markup language. Thats why confused
+Both are based or derived from SGML		Standard Generalized Markup Language
+	SGML has a vast vocabulary and also allows user defined tags.\
+
+HTML is predefined set of tags
+XML is user defined tags
+
+What is the need for XML?
+	There was a limitation in the application development.
+	Applications were developed in different languages
+		C, C++, Java, Visual Basic, VC++ etc 
+	Every language had different binary code. 
+	They were not interoperable.	Means, they cannot interact with each other
+	can java program method, call a method of visual basic program method?	NO
+
+That time, Enterprises Integration was a trend.
+	Ex: we should be able to withdraw money from Any atm??????
+		Before 1999, there were ATMs that accept only VISA or only Master Card 
+
+	Because, if we have visa card, we go to master card ATM, they cannot update the database of visa. Because that is different program done in different language.
+
+	Now, you understand the problem?????
+
+	1999 - 2001 		This was a period, where, language interoperability was taken as a challenge and lot of efforts put on these new invention.
+
+	Finally, in 2001, W3C introduced SOA		Service Oriented Architecture.
+
+	Thats when WEB SERVICES were introduced. 
+	1) Web services are programs that can be coded in one language. But can be accessed from other languages also
+
+The main reason for this interoperability was XML.
+
+	Program 1: created in visual basic, calls the method of another program created in Java. 
+		OMG, how is it possible???????????
+		the information sent between these two programs was in the format of XML
+
+
+They were looking for a format that is understood by any language?
+	text is the only format understood by any language.
+
+but in text, business logic or data type restriction is not there. any value is accepted by text.
+but XML offers technique to validate the data present in a text also.
+
+
+<STUDENTS>
+	<STUDENT>
+		<ID>1</ID>
+		<FIRSTNAME>Raja</FIRSTNAME>
+		<LASTNAME>Sivakumar</LASTNAME>
+		<AGE>21</AGE>
+	</STUDENT>
+	<STUDENT>
+		<ID>2</ID>
+		<FIRSTNAME>Abdul</FIRSTNAME>
+		<LASTNAME>Raheem</LASTNAME>
+		<AGE>22</AGE>
+	</STUDENT>
+	<STUDENT>
+		<ID>3</ID>
+		<FIRSTNAME>John</FIRSTNAME>
+		<LASTNAME>Abraham</LASTNAME>
+		<AGE>20</AGE>
+	</STUDENT>
+</STUDENTS>
+
+<TABLE>
+	<THEAD>
+		<TH>ID</TH>
+		<TH>First Name</TH>
+		<TH>Last Name</TH>
+		<TH>Age</TH>
+	</THEAD>
+	<TBODY>
+		<TR>
+			<TD>1</TD>
+			<TD>Raja</TD>
+			<TD>Sivakumar</TD>
+			<TD>21</TD>
+		</TR>
+		<TR>
+			<TD>2</TD>
+			<TD>Abdul</TD>
+			<TD>Raheem</TD>
+			<TD>22</TD>
+		</TR>
+		<TR>
+			<TD>3</TD>
+			<TD>John</TD>
+			<TD>Abraham</TD>
+			<TD>20</TD>
+		</TR>
+	</TBODY>
+</TABLE>
+
+
+What is the TD? when the TD is 1?
+
+difference between HTML and XML
+
+
+
+XML data is a plain text. Understood by any programming language
+XML allows validation of data present in the tags. Each tag can restrict the type of data present.
+
+XML alone, cannot do this validation. 
+
+We have to use techniques like
+
+DTD/ XSD validators
+
+CSS/ XSL for formating the information while presenting in browser
+
+
+XML is a text based markup language that is used to represent information that can be interchanged across heterogenous data sources or applications
+
+-------------------------------	
+<a href="www.google.com" >Google</a>
+
+Building blocks for XML document:
+
+1) Element		tags are elements in XML documents		here, a is the element
+2) Attribute		here, href is the attribute
+3) attribute value	here, www.google.com is the value of the attribute
+4) content		here Google is the content
+5) empty tags		example in html:		<br/>	
+			the empty tags end with /		they do not have end tag
+			they do not have start and end tag. Both tags are same empty tag
+6) Entities
+			in html:		&nbsp;		is an example for entities
+				Why we need entities?
+			there are some symbols used in XML that cannot be used as content
+			for example:
+				<formula>a &lt; b</formula>
+
+			&lt;		is less than
+			&gt;		is greater than
+
+7) namespace
+			you can compare this namespace concept with package concept in java.
+			while java packages group the classes
+			xml namespaces group the type definitions	(user defined types)
+8) comments
+			<!--	-->			in any markup language, comments
+
+
+NOW,
+	if you create an XML document, basically, it should be WELL FORMED
+
+what is WELLFORMEDNESS?
+There are some basic rules that a XML file must comply. 
+1) tags must be nested properly
+2) case sensitive. (values inside "" can be any case. no issues. ELEMENTS, ATTRIBUTES are case sensitive)
+		means, opening tag and closing tag must be same case
+		<FIRSTNAME>Raja</firstname>		THIS IS NOT ALLOWED
+3) the values of attributes must be in double quotes. EVEN IF IT IS A NUMBER
+		<EMPLOYEE ID="1">			here, 1 is also inside double quotes
+
+4) empty tags end with /
+		<BR/>
+5) There must be only ONE root element in a document. All elements are inside that root element only
+	
+Check what are the rules for well formed ness of XML document.
+
+How will you check the wellformed ness of a XML document?
+	if you open a XML file in browser, then Browser can check well formed ness
+
+
+<STUDENTS>
+	<STUDENT>
+		<ID>1</ID>
+		<FIRSTNAME>Raja</FIRSTNAME>
+		<LASTNAME>Sivakumar</LASTNAME>
+		<AGE>21</AGE>
+	</STUDENT>
+	<STUDENT>
+		<ID>2</ID>
+		<FIRSTNAME>Abdul</FIRSTNAME>
+		<LASTNAME>Raheem</LASTNAME>
+		<AGE>22</AGE>
+	</STUDENT>
+	<STUDENT>
+		<ID>3</ID>
+		<FIRSTNAME>John</FIRSTNAME>
+		<LASTNAME>Abraham</LASTNAME>
+		<AGE>20</AGE>
+	</STUDENT>
+</STUDENTS>
+
+
+save the file with .xml as extension
+
+open the file in a browser
