@@ -329,3 +329,250 @@ DEPT
 	DNAME
 
 Create the xml file and add some sample values
+
+--------------------------------------
+Now, that we have created the XML File. 
+Scenario:
+	We have 3 branches.
+	1) Chennai
+	2) Hyderabad
+	3) Bangalore
+
+Head office:	Mumbai
+
+Every week friday, the branches send the XML files to the head office.
+
+head office associate collate them into 1 single xml file.
+
+But sometimes, branches send inconsitent data
+
+ex:
+	Chennai branch missed DEPT
+	Hyderbad branch added extra elements/tags
+	
+so, before they send the file, we want them to validate the files and send
+
+validation means NOT ONLY well formed ness. 
+
+VALID documents are those documents that conforms to the format we specify
+	only the elements we specify, must be present in the XML file
+	only in the order
+	only in the upper/lowr case we specify
+	only the possible values we specify
+
+HOW WE ARE GOING TO ACHIEVE THIS?	(validating XML documents)
+we will send the schema file to the branches. 
+	Branches should create the documents that conforms to the schema
+
+to create the schema/structure of the documents, we may use 
+	DTD (or) XSD
+
+suppose, there is a table in mysql.
+	we cannot add any record or any structure. Right?
+	only the data that conforms to the table structure is allowed to add as a row.
+
+Introducing DTD
+	Document Type Definition
+
+DTD has its own syntax. 
+
+SYMBOLS USED IN DTD
+
++ 	one or more
+* 	zero or more
+?	zero or one		optional
+
+
+Lets see an example:
+
+!ELEMENT STUDENTS (STUDENT)+
+!ELEMENT STUDENT (ID,FIRSTNAME,LASTNAME,AGE)
+!ELEMENT ID (#PCDATA)
+!ELEMENT FIRSTNAME (#PCDATA)
+!ELEMENT LASTNAME (#PCDATA)
+!ELEMENT AGE (#PCDATA)
+
+
+DTD language do not have much data types. 
+CDATA
+PCDATA
+
+PCDATA parses the data and it will convert entities into values 	&gt;	WILL BE PARSED INTO > in output
+CDATA will display &gt; AS IT IS
+
+once we have created a DTD, we send it to the branches.
+
+Now, branches have created the XML File that conforms to the DTD.
+But how do you validate the XML file against the DTD
+
+dtd validators are javascript programs. 
+we can use online DTD validator
+
+
+If you create a separate DTD file, and then it is called as External DTD. 
+
+If DTD is a part of your XML file itself, then it is internal DTD or EMBEDDED DTD
+
+when we use EXTERNAL DTD, we should refer the DTD file in the XML file using:
+	<!DOCTYPE note SYSTEM "Note.dtd">
+
+when we use INTERNAL DTD, 
+
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE note [
+<!ENTITY nbsp "&#xA0;">
+<!ENTITY writer "Writer: Donald Duck.">
+<!ENTITY copyright "Copyright: W3Schools.">
+]>
+
+<note>
+<to>Tove</to>
+<from>Jani</from>
+<heading>Reminder</heading>
+<body>Don't forget me this weekend!</body>
+<footer>&writer;&nbsp;&copyright;</footer>
+</note>
+
+now example:
+<!DOCTYPE STUDENTS [
+<!ELEMENT STUDENTS (STUDENT)+ >
+<!ELEMENT STUDENT (ID,FIRSTNAME,LASTNAME,AGE) >
+<!ELEMENT ID (#PCDATA) >
+<!ELEMENT FIRSTNAME (#PCDATA) >
+<!ELEMENT LASTNAME (#PCDATA) >
+<!ELEMENT AGE (#PCDATA) >
+]>
+
+<STUDENTS>
+	<STUDENT>
+		<ID>1</ID>
+		<FIRSTNAME>Raja</FIRSTNAME>
+		<LASTNAME>Sivakumar</LASTNAME>
+		<AGE>21</AGE>
+	</STUDENT>
+
+	<STUDENT>
+
+		<ID>2</ID>
+		<FIRSTNAME>Abdul</FIRSTNAME>
+		<LASTNAME>Raheem</LASTNAME>
+		<AGE>22</AGE>
+	</STUDENT>
+	<STUDENT>
+		<ID>3</ID>
+		<FIRSTNAME>John</FIRSTNAME>
+		<LASTNAME>Abraham</LASTNAME>
+		<AGE>20</AGE>
+	</STUDENT>
+</STUDENTS>
+
+save this file as students.xml file
+
+we can upload xml file or paste the xml code in the validator website.
+
+https://www.truugo.com/xml_validator/
+
+validate the xml file against DTD
+
+do some mistakes in the xml code and check in validator
+
+----------------------------------------------------------------------
+ATTRIBUTES IN DTD
+	DEPARTMENT shall be the attribute
+
+Now, a doubt will come, in XML itself, what should be the element, what should be attribute?
+
+because,
+
+ID can be attribute or element? how to decide?
+
+<STUDENT ID="1">
+	
+</STUDENT>
+
+(or)
+
+<STUDENT>
+	<ID>1</ID>
+</STUDENT>
+
+which of the above is correct?
+
+Attribute? or Child element?
+
+1) If you find a student by Id, then it qualifies to be a key or primary key.
+	In that case, ID must be attribute
+2) If you categories by a field, that field must be ATTRIBUTE
+3) if you filter or sort by a field, then that field must be ATTRIBUTE
+4) If you rarely update or never update a field, then that field must be ATTRIBUTE
+
+ID, CATEGORY such fields comes under the above rules.
+
+so they are attributes
+
+i am going to modify the xml file so that ID becomes attribute
+
+<STUDENTS>
+	<STUDENT ID="1">
+		<FIRSTNAME>Raja</FIRSTNAME>
+		<LASTNAME>Sivakumar</LASTNAME>
+		<AGE>21</AGE>
+	</STUDENT>
+
+	<STUDENT ID="2">
+		<FIRSTNAME>Abdul</FIRSTNAME>
+		<LASTNAME>Raheem</LASTNAME>
+		<AGE>22</AGE>
+	</STUDENT>
+	<STUDENT ID="3">
+		<FIRSTNAME>John</FIRSTNAME>
+		<LASTNAME>Abraham</LASTNAME>
+		<AGE>20</AGE>
+	</STUDENT>
+</STUDENTS>
+
+
+
+=======================EXAMPLE FOR DTD WITH ATTRIBUTE==========================
+<!DOCTYPE STUDENTS [
+<!ELEMENT STUDENTS (STUDENT)+ >
+<!ELEMENT STUDENT (FIRSTNAME,LASTNAME,AGE) >
+<!ELEMENT ID (#PCDATA) >
+<!ELEMENT FIRSTNAME (#PCDATA) >
+<!ELEMENT LASTNAME (#PCDATA) >
+<!ELEMENT AGE (#PCDATA) >
+<!ATTLIST STUDENT 
+	ID CDATA #REQUIRED 
+	CATEGORY CDATA #IMPLIED>
+]>
+
+<STUDENTS>
+	<STUDENT ID="1" CATEGORY="ONE">
+		<FIRSTNAME>Raja</FIRSTNAME>
+		<LASTNAME>Sivakumar</LASTNAME>
+		<AGE>21</AGE>
+	</STUDENT>
+
+	<STUDENT ID="2">
+		<FIRSTNAME>Abdul</FIRSTNAME>
+		<LASTNAME>Raheem</LASTNAME>
+		<AGE>22</AGE>
+	</STUDENT>
+	<STUDENT ID="3">
+		<FIRSTNAME>John</FIRSTNAME>
+		<LASTNAME>Abraham</LASTNAME>
+		<AGE>20</AGE>
+	</STUDENT>
+</STUDENTS>
+==============================================
+You are going to create an XML file with internal DTD 
+
+EMPLOYEES
+	EMPLOYEE
+		attributes:	ID, DESIGNATION
+		FNAME
+		LNAME
+		DEPT
+			DID
+			DNAME
