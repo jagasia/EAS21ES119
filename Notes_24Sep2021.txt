@@ -576,3 +576,172 @@ EMPLOYEES
 		DEPT
 			DID
 			DNAME
+==========================================
+before lunch break, we created XML file with embedded DTD schema.
+
+DTD is very limited. 
+It does not have much data types and do not allow us to specify the pattern or range of values that are allowed in simple types.
+
+Introducing XSD
+-------------------------------------------XSD-----------------
+Xml Schema Definition
+----------------------
+
+xsd will always be external schema file.
+That can be referred from a XML file
+
+If we compare this XSD with DTD,
+
+XSD
+	syntax is same as XML syntax. DTD has its own syntax.
+	allows creating 
+		SimpleTypes
+		ComplexTypes
+	lot of options to specify
+		all
+		choice
+		sequence
+	and many content models and types
+
+	we can create user defined types in XSD
+
+	in DTD, suppose if we define 		EMPLOYEE (ID, FNAME, LNAME)
+	then in XML,
+		ID, FNAME, LNAME	must appear in that order only.
+
+	But in XSD, We can specify whether it should be in the specified order or any order or one among them??????
+	all such possibilities are there.
+
+------------------------
+Simple example:
+<STUDENTS>
+	<STUDENT>
+		<ID>S001</ID>
+		<FIRSTNAME>Rahul</FIRSTNAME>
+		<LASTNAME>Dravid</LASTNAME>
+		<AGE>50</AGE>
+	</STUDENT>
+	<STUDENT>
+		<ID>S002</ID>
+		<FIRSTNAME>Sachin</FIRSTNAME>
+		<LASTNAME>Tendulkar</LASTNAME>
+		<AGE>50</AGE>
+	</STUDENT>
+	<STUDENT>
+		<ID>S003</ID>
+		<FIRSTNAME>MS</FIRSTNAME>
+		<LASTNAME>Dhoni</LASTNAME>
+		<AGE>50</AGE>
+	</STUDENT>
+</STUDENTS>
+
+
+
+XSD introduce a concept called Namespaces.
+Namespaces are very important to distinguish between predefined tags and user defined tags.
+
+<BR/>		this is defined in HTML
+<break/>	this is my own tag. how to differenciate between html and my tag?
+<jag:break/>	this is to specify that this tag is defined in a namespace that is prefixed with "jag"
+
+<xsd:schema>	that means, schema is an element defined in a namespace, that is prefixed with "xsd"
+
+schema is the root element for a XSD file
+
+
+sequence
+	specific order
+all
+	any order
+choice
+	one from the list
+
+xmlns		xml namespace
+	is used to import a namespace and give a prefix
+
+
+Example:
+-----------
+
+<STUDENTS>
+	<STUDENT>
+		<ID>S001</ID>
+		<FIRSTNAME>Rahul</FIRSTNAME>
+		<LASTNAME>Dravid</LASTNAME>
+		<AGE>50</AGE>
+	</STUDENT>
+	<STUDENT>
+		<ID>S002</ID>
+		<FIRSTNAME>Sachin</FIRSTNAME>
+		<LASTNAME>Tendulkar</LASTNAME>
+		<AGE>50</AGE>
+	</STUDENT>
+	<STUDENT>
+		<ID>S003</ID>
+		<FIRSTNAME>MS</FIRSTNAME>
+		<LASTNAME>Dhoni</LASTNAME>
+		<AGE>50</AGE>
+	</STUDENT>
+</STUDENTS>
+
+
+
+
+
+
+
+
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<xsd:element name="STUDENTS" type="sts" />
+<xsd:complexType name="sts">
+	<xsd:sequence>
+		<xsd:element name="STUDENT" type="st" maxOccurs="unbounded" />
+	</xsd:sequence>
+</xsd:complexType>
+<xsd:complexType name="st">
+	<xsd:sequence>
+		<xsd:element name="ID" type="xsd:string" />
+		<xsd:element name="FIRSTNAME" type="xsd:string" />
+		<xsd:element name="LASTNAME" type="xsd:string" />
+		<xsd:element name="AGE" type="xsd:string" />
+	</xsd:sequence>
+</xsd:complexType>
+</xsd:schema>
+
+
+
+if we do not use minOccurs or maxOccurs then it is assumed as 1
+
+
+<xsd:complexType name="st">
+	<xsd:all>
+		<xsd:element name="ID" type="xsd:string" />
+		<xsd:element name="FIRSTNAME" type="xsd:string" />
+		<xsd:element name="LASTNAME" type="xsd:string" />
+		<xsd:element name="AGE" type="xsd:string" />
+	</xsd:all>
+</xsd:complexType>
+
+by using "all" instead of "sequence"
+we allow all the elements in any order
+sequence means only in the specified sequence/order
+all means any order but all
+
+choice
+	means, only 1 among the list of elements to be present in the content
+
+
+EMPLOYEES
+	EMPLOYEE
+		ID
+		FNAME
+		LNAME
+		DEPT
+			DID
+			DNAME
+
+
+
+
+https://www.liquid-technologies.com/online-xsd-validator
+
