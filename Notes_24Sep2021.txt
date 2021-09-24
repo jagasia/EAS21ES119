@@ -317,3 +317,15 @@ How will you check the wellformed ness of a XML document?
 save the file with .xml as extension
 
 open the file in a browser
+
+
+Create a XML file for the below info
+
+EID
+FNAME
+LNAME
+DEPT
+	DID
+	DNAME
+
+Create the xml file and add some sample values
