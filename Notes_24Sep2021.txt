@@ -745,3 +745,151 @@ EMPLOYEES
 
 https://www.liquid-technologies.com/online-xsd-validator
 
+----------------------------------------------
+<STUDENTS>
+	<STUDENT ID="S001">
+		<FIRSTNAME>Rahul</FIRSTNAME>
+		<LASTNAME>Dravid</LASTNAME>
+		<AGE>50</AGE>
+	</STUDENT>
+	<STUDENT ID="S002">
+		<FIRSTNAME>Sachin</FIRSTNAME>
+		<LASTNAME>Tendulkar</LASTNAME>
+		<AGE>50</AGE>
+	</STUDENT>
+	<STUDENT ID="S003">
+		<FIRSTNAME>MS</FIRSTNAME>
+		<LASTNAME>Dhoni</LASTNAME>
+		<AGE>50</AGE>
+	</STUDENT>
+</STUDENTS>
+
+
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<xsd:element name="STUDENTS" type="sts" />
+<xsd:complexType name="sts">
+	<xsd:sequence>
+		<xsd:element name="STUDENT" type="st" maxOccurs="unbounded" />
+	</xsd:sequence>
+</xsd:complexType>
+<xsd:complexType name="st">
+	<xsd:sequence>
+		<xsd:element name="FIRSTNAME" type="xsd:string" />
+		<xsd:element name="LASTNAME" type="xsd:string" />
+		<xsd:element name="AGE" type="xsd:string" />
+	</xsd:sequence>
+	<xsd:attribute name="ID" type="xsd:string" />
+</xsd:complexType>
+</xsd:schema>
+
+
+------------------------
+lets learn about simple types
+
+in the above example, the ID attribute type is string.
+But the ID has some rules
+	1) should start with "S"
+	2) followed by 3 digits
+
+to specify this rule, we can use regular expression
+
+<xsd:attribute name="ID" type="sid" />
+
+<xsd:simpleType name="sid">
+	<xsd:restriction base="xsd:string">
+		<xsd:pattern value="[S]{1}[0-9]{3}" />
+	</xsd:restriction>
+</xsd:simpleType>
+-======================================
+
+
+
+<STUDENTS>
+	<STUDENT ID="S001">
+		<FIRSTNAME>Rahul</FIRSTNAME>
+		<LASTNAME>Dravid</LASTNAME>
+		<AGE>50</AGE>
+	</STUDENT>
+	<STUDENT ID="S002">
+		<FIRSTNAME>Sachin</FIRSTNAME>
+		<LASTNAME>Tendulkar</LASTNAME>
+		<AGE>50</AGE>
+	</STUDENT>
+	<STUDENT ID="S003">
+		<FIRSTNAME>MS</FIRSTNAME>
+		<LASTNAME>Dhoni</LASTNAME>
+		<AGE>50</AGE>
+	</STUDENT>
+</STUDENTS>
+
+
+
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<xsd:element name="STUDENTS" type="sts" />
+<xsd:complexType name="sts">
+	<xsd:sequence>
+		<xsd:element name="STUDENT" type="st" maxOccurs="unbounded" />
+	</xsd:sequence>
+</xsd:complexType>
+<xsd:complexType name="st">
+	<xsd:sequence>
+		<xsd:element name="FIRSTNAME" type="xsd:string" />
+		<xsd:element name="LASTNAME" type="xsd:string" />
+		<xsd:element name="AGE" type="xsd:string" />
+	</xsd:sequence>
+	<xsd:attribute name="ID" type="sid" />
+</xsd:complexType>
+<xsd:simpleType name="sid">
+	<xsd:restriction base="xsd:string">
+		<xsd:pattern value="[S]{1}[0-9]{3}" />
+	</xsd:restriction>
+</xsd:simpleType>
+</xsd:schema>
+
+
+
+
+
+postiveInteger
+nonNegativeInteger
+
+but how to restrict the age to max 100
+simple type with restriction 
+
+Task:
+-----
+<CUSTOMERS>
+	<CUSTOMER CID="C001">
+		<FIRSTNAME>Rajiv</FIRSTNAME>
+		<LASTNAME>kumar</LASTNAME>
+		<ADDRESS>
+			<DNO>1</DNO>
+			<STREET>Main road</STREET>
+			<CITY>Chennai</CITY>
+		</ADDRESS>
+		<AGE>50</AGE>
+	</CUSTOMER>
+	<CUSTOMER CID="C001">
+		<NAME>Ram kumar</NAME>
+		<ADDRESS>
+			<DNO>1</DNO>
+			<STREET>Main road</STREET>
+			<CITY>Chennai</CITY>
+		</ADDRESS>
+	</CUSTOMER>
+</CUSTOMERS>
+
+
+
+CUSTOMER can either have
+	FIRSTNAME and LASTNAME	(or(
+	NAME
+
+HINT:
+	use <choice>
+		choice will allow either 1 among the list to be used. NOT ALL
+
+	
+AGE is optional.
+But if AGE is present, max of 100. 		101 is not allowed
+minimum 1					0 is not allowed
