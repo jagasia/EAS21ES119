@@ -53,3 +53,295 @@ Parse
 Create
 Query
 Update
+
+
+Understand what is DOM
+and how to access a XML document (any markup language like HTML, XML) 
+	using DOM
+
+-----------------------------------------END OF XML---------------------------------------------------
+2) rest webservice
+3) soap webservice
+
+-----------------------------------------------
+What is a web service?
+	have anyone heard about web service?
+		cloud Amazon Web Services)	AWS
+		communication between programs
+		a server running on a computer device, listening for requests at a particular
+			port over a network, serving web documents
+		communication between devices over a network
+		
+	these are the definitions obtained from our participants
+
+Web application?
+	have you heard about web application / website?
+	
+	What could be the difference between web application (website) and web service?
+
+is web service, different from web application?
+	YES
+
+iS facebook, a web application or web service?
+--------------------------------------------------
+	it is a web application. Why?
+		Because, web application provides
+			User Interface (front end)
+			Business logic
+			Data storage
+
+	these 3 are the components of any application (web/mobile/console/windows)
+
+Web services DO NOT HAVE USER INTERFACE 
+	They only have remaining 2 services
+			business logic
+			data services		(storing, retrieving, etc)
+
+Web services do not have FRONT END
+
+why?
+	You said FACEBOOK is a web application. Because, it provides entire 3 services.
+	But have you ever seen other websites that allow you to login using FB account?
+
+	ex:
+		In udemy.com website, i am able to login using "Facebook" account.
+
+	Now tell me, in udemy.com, what is facebook?	
+		web application? or web service?
+
+	Here, facebook is a web service. Because, entire facebook application is not
+		shared with udemy.com
+
+Another example,
+	Tell me one bank where you have account
+		ICICI bank
+	Can you login to icici.com and access your account details
+		Here, icici.com is a web application
+
+	Can you make payment in BookMyShow.com using icici net banking???????
+		yes. Here, icici web service is used.
+
+In all these examples, one thing is common,
+	Our entire web application SHOULD not be shared with other enterprise.
+
+Udemy needs Facebook authentication service
+BookMyShow needs ICICI payment service
+
+In these situations,
+	FACEBOOK / ICICI do not share their entire project with the other enterprise.
+
+They just share a portion of their project to other enterprises.
+
+That is where "web services" come into picture.
+
+Now, what are the challenges in sharing our code with other enterprises?
+	our code is created in Java Language.
+Other enterprises might create their project in different programming language
+	ex: c#	or Visual Basic
+
+so language interoperability.
+	remember XML
+
+Web services are 
+	web components that are deployed in web application servers that can be 
+		accessed by programs created in any programming languages from any platform
+		from anywhere
+
+	this is because, the data transferred in a neutral format (XML)
+
+web application server?
+	web servers provide space for web applications and provide access from anywhere in the world
+	but if those web servers also provide run time to execute programs and produce output,
+	then those web servers are also called as web application servers.
+
+	shortly, they are called as 
+		Application Servers
+		App server
+
+	ex:
+		Apache Tomcat Server	(they can provide JRE)
+		JBoss
+		Weblogic
+		WebSphere
+		Sun app server	-	Glassfish server
+
+
+	we are going to use Apache tomcat servers
+		they provide web storage and also Runtime Env for java programs
+
+Web services
+	web components
+	first introduced during 2001
+		they were SOAP web services
+		SOAP 	Simple Object Access Protocol
+
+	SOAP messages are sent and received by webservice to and fro client applications
+
+SOAP Messages are created in XML language
+
+Later,
+another kind of webservice technology was introduced
+	REST
+		REpresentational State Transfer
+			is not a protocol. But architectural style for webservice
+
+	The advantage of REST over SOAP is 
+		SOAP supported only XML format of data interchange
+	BUT
+		REST supported variety of data formats
+			including XML
+			JSON is the most preferred format of data across applications
+	JSON	JavaScript Object Notation
+
+class Employee
+{
+	private int eid;
+	private String firstName;
+	private String lastName;
+	//assume that setters and getter are there
+}
+
+in XML,
+<EMPLOYEES>
+	<EMPLOYEE>
+		<EID>2</EID>	
+		<FIRSTNAME>Ram</FIRSTNAME>
+		<LASTNAME>Kumar</LASTNAME>
+	</EMPLOYEE>
+</EMPLOYEES>
+
+IN JSON,
+
+{"eid":"1","firstName":"Ram","lastName":"Kumar"}
+
+FOR array of objects
+[{"eid":"1","firstName":"Ram","lastName":"Kumar"}]
+
+in javascript, [] refers to an array
+
+We are learning RESTful web services first. Then SOAP web services.
+
+
+SMS otp. from our project
+how can we send sms OTP FROM OUR project?
+
+we found a webservice in google. that webservice will provide methods
+
+sendSMSIndia("9898989","this is the message");
+
+so if we call this method, through internet, that web service method, can send sms for us
+
+It is not practically possible for us to write every code. sometimes, we need to borrow
+some code from other enterprise, because, they are the owner for that code.
+
+In that situation, we need webservice technique that allows one enterprise to call the program from other enterprise.
+
+credit card validation?
+	how do you know that credit limit amount has not exceeded.
+
+	how do you know that the account has enought balance amount or not?
+
+	how will you make a transaction in another bank? unless they do not allow
+
+-------------------------------------------------------------------------------------
+
+Lets discuss how practically, we can do that?
+	how to create a rest ful webservice?
+
+There are frameworks that help us to create RESTful webservices.
+	i) Jersey
+	ii) Spring
+
+we are going to learn jersey f/w now.
+
+What this jersey framework do?
+
+Do you know servlet?		(servlets, jsp)
+
+They are web application components
+
+In our project, any request comes, should be received by a "Dispatcher" servlet. 
+That servlet is already available in "Jersey" framework.
+
+This jersey fw provides a "dispatcher" servlet that will receive all the requests (based on the3 pattern we specify
+and call the methods accordingly
+
+Do you have eclipse in your computer? 
+	Eclipse for Java EE developer		(NOT eclipse for Java Developer)
+
+Have you downloaded Apache tomcat server?
+
+
+1) in eclipse, we create a dynamic web project
+	this option will not be there, if you have "Eclipse for Java Developer"
+	you should have "Eclipse for Java EE Developer"
+
+2) whenever we create a dynamic web project,
+		next-> next-> before finish, select the "deployment descriptor" ie., web.xml
+	so that web.xml file is added into our project.
+
+	if you have forgotten to add this,
+	later, we can add	
+		right click project-> java ee tools -> deployment descriptor stub
+
+	thats how we can add a web.xml file into our project
+
+3) in web.xml
+	we configure a servlet (ie already there in jersey fw) 
+	such that, all request urls coming with /rest will be received by dispatcher servlet
+
+	Before that, CONVERT the project into Maven Project and add dependencies for jersey
+
+
+4) convert the project into maven project
+	right click the project -> configure -> convert to maven project
+		group id:		com.cts.rest
+		artifact id:		demo-1
+
+5) add the following dependencies
+		<dependency>
+            <groupId>org.glassfish.jersey.containers</groupId>
+            <artifactId>jersey-container-servlet</artifactId>
+            <version>2.29.1</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.glassfish.jersey.inject</groupId>
+            <artifactId>jersey-hk2</artifactId>
+            <version>2.29.1</version>
+        </dependency>
+    
+        <dependency>
+            <groupId>org.glassfish.jersey.media</groupId>
+            <artifactId>jersey-media-json-jackson</artifactId>
+            <version>2.29.1</version>
+        </dependency>
+
+	<dependency>
+	    <groupId>asm</groupId>
+	    <artifactId>asm</artifactId>
+	    <version>3.1</version>
+	</dependency>
+
+6) go to web.xml and configure the file so that all requests with url /rest will be received by the jersey dispatcher servlet
+		    <servlet>
+        <servlet-name>Jersey REST Service</servlet-name>
+        <servlet-class>org.glassfish.jersey.servlet.ServletContainer</servlet-class>
+        <init-param>
+            <param-name>jersey.config.server.provider.packages</param-name>
+            <param-value>com.cts.rest</param-value>
+        </init-param>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Jersey REST Service</servlet-name>
+        <url-pattern>/rest/*</url-pattern>
+    </servlet-mapping>
+
+
+7) create a controller class inside the package "com.cts.rest"
+	
+There are some annotations
+	@Path		we specify the path			localhost:8080/projectname/rest/abcd
+
+		@Path("/abcd")
