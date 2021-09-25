@@ -345,3 +345,380 @@ There are some annotations
 	@Path		we specify the path			localhost:8080/projectname/rest/abcd
 
 		@Path("/abcd")
+
+---------------------------
+ Before lunch break, we were able to create a RESTful web service 
+	
+Now, lets create an application that provides CRUD operations
+
+	Create, Read, Update, Delete
+
+how do you access database from java program?
+	Which database you learned during SQL module?
+		MySql
+	Did you create a java program that access mysql?
+		jdbc
+
+Before going into a jdbc CRUD operation, demo, 
+	Lets see how we can return Objects from our webservice methods.
+
+
+
+{"employeeId":1,"firstName":"Rama","lastName":"Krishna"}
+
+
+@Produces("text/json")
+	the @Produces annotation specifies that this method returns a json
+
+
+	@GET
+	@Path("/employee")
+	@Produces("text/json")
+	public Employee getEmployee()
+	{
+		return new Employee(1L, "Rama","Krishna");
+	}
+
+
+
+in real world, if you see already available restful web services, you will understand what we are going to do then.
+
+
+do you know the http request methods?
+
+	GET
+	POST
+	PUT
+	PATCH 
+	DELETE
+
+GET
+	returns result
+
+POST
+	adds new records
+
+PUT
+	updates existing records
+
+PATCH
+	updates not all the fields. Updates some of the fields
+
+DELETE
+	removes record
+
+These are the standard conventions followed in REST architecture
+
+
+
+the CRUD rest api we are going to create
+	GET		returns all the entities		(records)
+	GET/id		return only 1 entity if found
+	POST		add a new entity
+	PUT		update existing entity
+	DELETE		remove entity
+
+
+Now, can anyone tell me how to test these mappings,
+	GET 		can be tested in browser
+	GET/id		can be tested in browser
+	POST		cannot be tested in browser address bar. 
+			what to do?
+
+to test
+	POST, PUT, DELETE, 		We can use post man
+
+Anyone know what is post man?
+
+
+Demo:
+	first lets decide what should be table in the mysql database
+
+BRANCH 
+	is the table in the database
+
+ CREATE TABLE branch
+   (
+    bid VARCHAR(6),
+    bname VARCHAR(30),
+    bcity VARCHAR(30),
+    CONSTRAINT branch_bid_pk PRIMARY KEY(bid) 
+   );
+
+
+
+INSERT INTO branch VALUES('B00001','Asaf ali road','Delhi');
+INSERT INTO branch VALUES('B00002','New delhi main branch','Delhi');
+INSERT INTO branch VALUES('B00003','Delhi cantt','Delhi');
+INSERT INTO branch VALUES('B00004','Jasola','Delhi');
+INSERT INTO branch VALUES('B00005','Mahim','Mumbai');
+INSERT INTO branch VALUES('B00006','Vile parle','Mumbai');
+INSERT INTO branch VALUES('B00007','Mandvi','Mumbai');
+INSERT INTO branch VALUES('B00008','Jadavpur','Kolkata');
+INSERT INTO branch VALUES('B00009','Kodambakkam','Chennai');
+
+
+
+GET
+	http://localhost:8080/demo-1/rest/branch
+GET/bid
+	http://localhost:8080/demo-1/rest/branch/B00011
+POST
+	http://localhost:8080/demo-1/rest/branch
+PUT
+	http://localhost:8080/demo-1/rest/branch
+DELETE
+	http://localhost:8080/demo-1/rest/branch/B00011
+
+
+
+
+//Branch.java
+
+package com.cts.rest.entity;
+
+public class Branch {
+	private String bid;
+	private String bname;
+	private String bcity;
+	
+	public Branch() {}
+
+	public Branch(String bid, String bname, String bcity) {
+		super();
+		this.bid = bid;
+		this.bname = bname;
+		this.bcity = bcity;
+	}
+
+	public String getBid() {
+		return bid;
+	}
+
+	public void setBid(String bid) {
+		this.bid = bid;
+	}
+
+	public String getBname() {
+		return bname;
+	}
+
+	public void setBname(String bname) {
+		this.bname = bname;
+	}
+
+	public String getBcity() {
+		return bcity;
+	}
+
+	public void setBcity(String bcity) {
+		this.bcity = bcity;
+	}
+	
+}
+
+
+
+
+//BranchDao.java
+package com.cts.rest.dao;
+
+import java.sql.SQLException;
+import java.util.List;
+
+import com.cts.rest.entity.Branch;
+
+public interface BranchDao {
+
+	int create(Branch branch) throws SQLException;
+
+	List<Branch> read() throws SQLException;
+
+	Branch read(String bid) throws SQLException;
+
+	int update(Branch branch) throws SQLException;
+
+	int delete(String bid) throws SQLException;
+
+}
+
+
+
+
+
+
+//BranchDaoImpl.java
+package com.cts.rest.dao;
+
+import java.sql.Connection;
+import java.sql.Driver;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
+
+import com.cts.rest.entity.Branch;
+
+public class BranchDaoImpl implements BranchDao {
+	private Connection getConnection() throws SQLException
+	{
+		Driver driver=new com.mysql.jdbc.Driver();
+		return DriverManager.getConnection("jdbc:mysql://localhost:3306/es119","root","");
+	}
+	
+	@Override
+	public int create(Branch branch) throws SQLException {
+		Connection con = getConnection();
+		PreparedStatement st = con.prepareStatement("INSERT INTO Branch VALUES (?,?,?)");
+		st.setString(1, branch.getBid());
+		st.setString(2, branch.getBname());
+		st.setString(3, branch.getBcity());
+		int no=st.executeUpdate();
+		con.close();
+		return no;
+	}
+	@Override
+	public List<Branch> read() throws SQLException {
+		Connection con = getConnection();
+		Statement st = con.createStatement();
+		ResultSet rs = st.executeQuery("SELECT * FROM Branch");
+		List<Branch> branchList=new ArrayList<Branch>();
+		while(rs.next())
+		{
+			//every iteration gives one row. Each row becomes on object of Branch
+			Branch branch=new Branch(rs.getString(1), rs.getString(2), rs.getString(3));
+			branchList.add(branch);
+		}
+		con.close();
+		return branchList;
+	}
+	@Override
+	public Branch read(String bid) throws SQLException {
+		Connection con = getConnection();
+		PreparedStatement st = con.prepareStatement("SELECT * FROM Branch WHERE bid=?");
+		st.setString(1, bid);
+		ResultSet rs = st.executeQuery();
+		Branch branch=null;
+		if(rs.next())
+		{
+			branch=new Branch(rs.getString(1), rs.getString(2), rs.getString(3));
+		}
+		con.close();
+		return branch;
+	}
+	@Override
+	public int update(Branch branch) throws SQLException {
+		Connection con = getConnection();
+		PreparedStatement st = con.prepareStatement("UPDATE Branch SET bname=?, bcity=? WHERE bid=?");
+		
+		st.setString(1, branch.getBname());
+		st.setString(2, branch.getBcity());
+		st.setString(3, branch.getBid());
+		
+		int no=st.executeUpdate();
+		con.close();
+		return no;
+	}
+	@Override
+	public int delete(String bid) throws SQLException {
+		Connection con = getConnection();
+		PreparedStatement st = con.prepareStatement("DELETE FROM Branch WHERE bid=?");
+		st.setString(1, bid);
+		int no=st.executeUpdate();
+		con.close();
+		return no;
+	}
+	
+}
+
+
+
+
+
+
+//BranchController.java
+
+package com.cts.rest.controller;
+
+import java.sql.SQLException;
+import java.util.List;
+
+import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
+import javax.ws.rs.GET;
+import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
+import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
+
+import com.cts.rest.dao.BranchDao;
+import com.cts.rest.dao.BranchDaoImpl;
+import com.cts.rest.entity.Branch;
+
+@Path("/branch")
+public class BranchController {
+	
+	private BranchDao bdao=new BranchDaoImpl();
+	
+	@GET
+	@Produces(MediaType.APPLICATION_JSON)
+	public List<Branch> getAllBranches() throws SQLException {
+		return bdao.read();
+	}
+	
+	@GET
+	@Path("/{bid}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Branch findBranchById(@PathParam("bid") String bid) throws SQLException {
+		return bdao.read(bid);
+	}
+	
+	@POST
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces("text/plain")
+	public int addBranch(Branch branch) throws SQLException {
+		System.out.println("Executed");
+		return bdao.create(branch);
+	}
+	
+	@PUT
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public int updateBranch(Branch branch) throws SQLException {
+		return bdao.update(branch);
+	}
+	
+	@DELETE
+	@Path("/{bid}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public int deleteBranch(@PathParam("bid") String bid) throws SQLException {
+		return bdao.delete(bid);
+	}
+	
+}
+
+
+
+
+Task:
+------
+Employee.java			
+	eid, firstName, lastName, salary, departmentName
+
+EmployeeDaoImpl.java
+	read()		all employees as List<Employee>
+	read(eid)
+	findEmployeeByDepartmentName
+	create
+	update
+	delete
+
+create the controller 
+
+test the urls in the post man
+
