@@ -1,0 +1,55 @@
+Yesterday,
+	we learned XML
+		Building block of XML
+		DTD
+		XSD
+			namespace
+			schemaLocation
+			elements, attributes
+			complexType
+			simpleType
+			sequence, all, choice
+			min, max
+			datatypes:		string, integer, positiveInteger, nonNegativeInteger
+
+		if you see XSD language, it is by default camelCase		first letter is lower case, next every word first letter in upper case
+			
+		parsers!
+			what is the need for parsers?
+				Parsers are used to read xml document using programs like java program or javascript
+		2 parsers we learn in XML module:
+			SAX		xml file, java program for handler, java program main method
+			DOM
+
+Lets discuss what is DOM?
+-------------------------
+	Expansion for DOM:
+			Document Object Model
+				The aim of DOM is to represent the HTML/XML document as an object.
+				If we can represent anything as an object, then we can manipulate that object.
+				So if we represent an XML document as an object, we can access any element or even manipulate (insert update delete)
+
+	You know javascript.
+		in javascript,
+			document.getElementById("txt1").value;		//do you remember? This is DOM program
+
+	so, if you access a XML document using DOM program, you will be able to do the same as above!
+
+we need to parse an xml file to get DOM object	(Document)
+	File f=new File("input.xml");
+	DocumentBuilderFactory dbf=DocumentBuilderFactory.newInstance();
+	DocumentBuilder db=dbf.newDocumentBuilder();
+	Document doc=db.parse(f);
+
+		//this doc is the DOM that represents the xml document as an object
+
+	NodeList nList=doc.getElementsByTagName("student");
+	
+
+
+https://www.tutorialspoint.com/java_xml/java_dom_parse_document.htm
+
+Parse
+Create
+Query
+Update
