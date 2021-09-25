@@ -722,3 +722,17 @@ create the controller
 
 test the urls in the post man
 
+----------------------
+Rest Principles
+https://restfulapi.net/
+
+
+https://docs.jboss.org/resteasy/docs/1.0.2.GA/userguide/html/index.html
+
+the above tutorial
+	@PathParam
+	@QueryParam
+	@MatrixParam
+	@FormParam
+	@HeaderParam
+	@CookieParam
