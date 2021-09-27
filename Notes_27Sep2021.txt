@@ -118,3 +118,83 @@ XSRF
 Caching in RESTful webservices
 Concurrency
 HTTP Status codes
+
+------------------------------------------------------------------------------
+SOAP web service
+
+SOAP web service was the first web service technique introduced. In the year 2001. 
+SOAP 
+	Simple Object Access Protocol.
+	send / receive data to and fro the client in the form of SOAP messages.
+
+	SOAP messages are XML text
+		Envelop
+		Body
+		optional Header
+
+	SOAP is rigid with only XML formatters. It does not support other formats like JSON.
+
+Difference between SOAP and REST
+
+	SOAP provides only 1 URL for the entire web service.
+	REST provides 1 URL per method. Each method with an URL. REST supports micro service architecture.
+
+Shall we see an example for SOAP?
+
+Let me tell you what exactly I am going to do now.
+
+What is the purpose of web service?
+	We are exposing some java methods to the client applications.
+
+Lets create 2 methods 
+	sum(int, int)
+	product(int, int)
+
+1) Create an interface that declares these methods
+2) Create a class that implements the above interface
+3) Create a web service based on Bottom Up approach (means, the impl code is already available)
+4) get the URL for WSDL
+
+
+What is WSDL?
+	Web Services Description Language
+		this is a XML document. In fact Documentation of the web service.
+		we can get all information related to that webservice.
+		like, what are the methods present in the web service?
+		what are their parameters/ arguments
+		what is the return type?
+
+		all such information can be obtained from the documentation. ie., WSDL
+		this kind of documentation is not found in REST. Swagger is used to provide that. (didn't learn)
+
+5) We create one more java project (java project / Dynamic web project / another web service, wherever)
+6) we access the webservice using the WSDL url we obtained while creating the web service.
+
+so we create 2 projects
+	1) a dynamic web project for web service
+	2) a java project to access the web service
+
+
+
+http://localhost:8080/my-web-service-1/services/MathsImpl
+
+
+this is the url for client applications
+
+For client application
+i am going to create a client project
+usually, it is good idea to open one more instance of eclipse and create client. So that both will run parallely.
+When web service is not running, client cannot access the web service.
+
+
+
+http://localhost:8080/my-web-service-1/services/MathsImpl?WSDL
+
+IN THE client project,
+	right click project, 
+		new web service client
+		paste the url 	(?WSDL)
+
+	i pull up to start client. Because, test client is sample client program, automatically generated.
+	I am going to write the code, so i dont want test client
+
