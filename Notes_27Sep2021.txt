@@ -1,0 +1,120 @@
+REST
+	Architecture.
+	REST is not a protocol. It is an architectural style.
+	It suggests that any request url is received by our application,
+	should be redirected to a method based on PATH
+
+	HTTP methods
+		GET
+		POST
+		PUT
+		DELETE
+		PATCH
+
+	JDK, Eclipse, Jersey fw, Apache Tomcat
+
+	URI
+		structure
+		same url but different http request methods
+		consistent url
+	
+	Entities
+		A POJO class that maps to a table in database
+		find all entities
+		find entity by id
+		add entity
+		modify entity
+		delete entity
+
+		These are the CRUD operations we did
+
+	HttpRequest and HttpResponse 
+		are always allowed to be the parameters of any method
+		for input and output
+
+	@Produces
+		annotation is used to specify the content type (MIME)
+			text/html
+			text/xml
+			text/json
+		specifies that the method returns object of these types
+
+	@Consumes
+		annotation is used to specify the content type (MIME)
+			text/html
+			text/xml
+			text/json
+		
+		specifies that the method accepts parameters of these types
+
+Build, deploy, test the restful webservices
+
+Statelessness:
+	Every method in the rest web service is independent.
+	There is no state management or session management across methods
+
+Authentication:
+	Usually, in RESTful webservices, the authentication and authorization 
+	are performed by Open Authentication service like 
+		gmail
+		facebook
+		github
+	etc
+	using OAuth2
+
+	What is authentication?
+		is a process of validating the identity of the user, who claims to be.
+	
+		whether you are a valid user or not?
+
+Authorization:
+	You may be a valid user. You might have passed authentication.
+	But you are allowed to do something. Not allowed to do something else.
+
+	What are the permissions you have?
+	That is authorization.
+
+	
+XSRF/CSRF
+	Cross Site Request Forgery
+
+	we are creating a cookie from our program.
+	Others can also create a program and read our cookie.
+	This is called cross site request forgery
+
+	so to prevent this attack. 
+	We can provide access only from specific Cross Origins
+
+In spring fw, we use
+	@CrossOrigin(origins={"http://localhost:4200"})
+
+	This will allow access from origins specified as above.
+
+Caching
+	Cache remembers some info in memory so that it reduce the time required to retrieve the info next time
+
+Http Status codes
+	404,...	any code starts from 4 means, error
+	202,... any code starts from 2 means, ok
+	5....
+
+	Have a look on the status code.
+
+Annotations under JAX-RS
+	Java Api for XML and RS for Restful Services
+
+
+Let me show you how we can access a restful webservice from a java program.
+Old technique
+
+NetClientGet program is uploaded in GIT. check
+
+To access a REST api from another java program, we use Feign Client.
+
+Activity:
+-----------
+
+XSRF
+Caching in RESTful webservices
+Concurrency
+HTTP Status codes
