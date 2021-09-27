@@ -198,3 +198,129 @@ IN THE client project,
 	i pull up to start client. Because, test client is sample client program, automatically generated.
 	I am going to write the code, so i dont want test client
 
+
+
+29-Sep-2021
+	Morning	XML assessment
+	Afternoon SOAP assessment
+30-Sep-2021
+	Afternoon REST assessment
+
+
+
+
+UDDI	Universal Description, Discovery and Integration	(a registry where web services are registered)
+	and client applications look up for web services in the UDDI
+WSDL	Web Services Description Language			(xml document, in fact documentation that explains the web service)
+
+HTTP	HyperText Transfer Protocol
+		This is the protocol used by Web services. That makes web services accessible from anywhere in the world.
+SOAP
+	Simple Object Access Protocol
+		this is a message format in XML that SOAP web service send/receive in SOAP format only
+
+
+
+We choose SOAP webservice when the data format is XML
+and the entire web service is represented by 1 URL
+
+So if the requirement is to share microservices, then REST ful web services are chosen
+And REST supports multiple formats including XML
+
+JAX-RS
+JAX-WS		Java API for XML Web Services
+
+	we use annotations to create web service.
+	@WebService annotation for the class
+	@WebMethod annotation for the methods
+
+
+package com.javacodegeeks.examples.jaxws;
+ 
+import javax.jws.WebMethod;
+import javax.jws.WebService;
+import javax.jws.soap.SOAPBinding;
+import javax.jws.soap.SOAPBinding.Style;
+ 
+@WebService
+@SOAPBinding(style = Style.RPC)
+public interface CalculatorI {
+    @WebMethod
+    int add(int a, int b);
+ 
+    @WebMethod
+    int subtract(int a, int b);
+ 
+    @WebMethod
+    int multiply(int a, int b);
+ 
+    @WebMethod
+    int divide(int a, int b);
+}
+
+
+
+//implementation class as below:
+
+package com.javacodegeeks.examples.jaxws;
+ 
+import javax.jws.WebService;
+ 
+@WebService(endpointInterface = "com.javacodegeeks.examples.jaxws.CalculatorI")
+public class CalculatorImpl implements CalculatorI {
+ 
+    @Override
+    public int add(int a, int b) {
+        return a + b;
+    }
+ 
+    @Override
+    public int subtract(int a, int b) {
+        return a - b;
+    }
+ 
+    @Override
+    public int multiply(int a, int b) {
+        return a * b;
+    }
+ 
+    @Override
+    public int divide(int a, int b) {
+        return a / b;
+    }
+ 
+}
+
+
+
+
+04
+05
+06
+07
+08
+09
+10
+11
+12
+package com.javacodegeeks.examples.jaxws;
+ 
+import javax.xml.ws.Endpoint;
+ 
+public class CalcPublisher {
+ 
+    public static void main(String[] args) {
+        Endpoint ep = Endpoint.create(new CalculatorImpl());
+        ep.publish("http://127.0.0.1:10000/calcServer");
+    }
+ 
+}
+
+
+
+
+//	the ip address 		127.0.0.1	always means localhost	(ie., the computer on which this program is running)
+
+
+https://examples.javacodegeeks.com/enterprise-java/jws/jax-ws-web-service-example/
+
